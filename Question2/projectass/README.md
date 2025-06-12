@@ -33,8 +33,7 @@ GET http://localhost:9876/numbers/e
 ```
 ## Response
 json
-Copy
-Edit
+
 {
   "windowPrevState": [2, 4, 6, 8],
   "windowCurrState": [2, 4, 6, 8, 10, 12, 14, 16, 18, 20],

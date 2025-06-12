@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+# 📊 Average Calculator Microservice
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This microservice exposes a REST API endpoint to compute a rolling average of numbers fetched from an external evaluation service, based on a given number category (prime, fibonacci, even, or random).
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+- REST API endpoint: `GET /numbers/{numberid}`
+- Supported `{numberid}` values:
+  - `p` – Prime numbers
+  - `f` – Fibonacci numbers
+  - `e` – Even numbers
+  - `r` – Random numbers
+- Maintains a sliding window of up to **10 unique numbers**
+- Fetches numbers from a third-party server only
+- Ignores:
+  - Duplicate numbers
+  - Slow responses (> 500 ms)
+  - API call errors
+- Response includes:
+  - Previous and current window states
+  - New numbers fetched
+  - Average of the current window
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🧪 Example
 
-### `npm test`
+### Request
+```http
+GET http://localhost:9876/numbers/e
+```
+#Response
+json
+Copy
+Edit
+{
+  "windowPrevState": [2, 4, 6, 8],
+  "windowCurrState": [2, 4, 6, 8, 10, 12, 14, 16, 18, 20],
+  "numbers": [10, 12, 14, 16, 18, 20],
+  "avg": 12.0
+}
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+##🌐 External Test APIs
+Prime: http://20.244.56.144/evaluation-service/primes
 
-### `npm run build`
+Fibonacci: http://20.244.56.144/evaluation-service/fibo
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Even: http://20.244.56.144/evaluation-service/even
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Random: http://20.244.56.144/evaluation-service/rand
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+##📌 Notes
+The microservice maintains fast responses by using async calls and a 500 ms timeout.
 
-### `npm run eject`
+Only unique numbers are stored and old entries are removed once the window exceeds the limit.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This does not implement number-generating logic — it fetches all data from the provided APIs.

@@ -31,7 +31,7 @@ This microservice exposes a REST API endpoint to compute a rolling average of nu
 ```http
 GET http://localhost:9876/numbers/e
 ```
-#Response
+## Response
 json
 Copy
 Edit
@@ -42,7 +42,7 @@ Edit
   "avg": 12.0
 }
 
-##🌐 External Test APIs
+## 🌐 External Test APIs
 Prime: http://20.244.56.144/evaluation-service/primes
 
 Fibonacci: http://20.244.56.144/evaluation-service/fibo
@@ -51,7 +51,7 @@ Even: http://20.244.56.144/evaluation-service/even
 
 Random: http://20.244.56.144/evaluation-service/rand
 
-##📌 Notes
+## 📌 Notes
 The microservice maintains fast responses by using async calls and a 500 ms timeout.
 
 Only unique numbers are stored and old entries are removed once the window exceeds the limit.
